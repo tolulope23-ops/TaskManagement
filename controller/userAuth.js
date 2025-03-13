@@ -1,28 +1,28 @@
 const {StatusCodes} = require('http-status-codes');
-const User = require('../model/user');
+const User = require('../model/userAuth');
 
 
 const userRegister = async (req, res) =>{
     const {firstname, lastname, email, password} = req.body;
 
     try {
-        const userAlreadyExist = await User.findOne({email});
-        if(userAlreadyExist){
+        const userExist = await User.findOne({email});
+        if(userExist){
             return res.status(StatusCodes.BAD_REQUEST).json({
                 status: StatusCodes.BAD_REQUEST,
                 message: 'user already exist'
             })
         }
 
-        const user = new User(req.body);
-        await user.save();
+        const newUser = new User(req.body);
+        await newUser.save();
         res.status(StatusCodes.CREATED).json({
             status: StatusCodes.CREATED,
             message: 'new user registered',
             data: {
-                firstname: user.firstname,
-                lastname: user.lastname,
-                email: user.email
+                firstname: newUser.firstname,
+                lastname: newUser.lastname,
+                email: newUser.email
             }
         })
     } catch (error) {
@@ -45,12 +45,19 @@ const userLogin = async (req, res) => {
                 message:'user does not exist'
             });
         };
+        const isPasswordCorrect = await user.comparePassword(password);
+        if (!isPasswordCorrect)
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                status:StatusCodes.BAD_REQUEST,
+                message:'password not correct'
+            });
 
         res.status(StatusCodes.OK).json({
             status:StatusCodes.OK,
             message:'user loggedin',
             data: {
-                email: user.email
+                email: user.email,
+                password: user.password
             }
         });
     } catch (error) {
