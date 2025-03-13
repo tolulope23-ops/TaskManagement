@@ -5,8 +5,8 @@ const UserProfile = require('../model/userProfile');
 const UserInfo = async (req, res) => {
     try {
         const profile = await UserProfile.find();
-        if(!profile){
-            res.status(StatusCodes.NOT_FOUND).json({
+        if(profile.length == 0){
+            return res.status(StatusCodes.NOT_FOUND).json({
                 status: StatusCodes.NOT_FOUND,
                 message: 'no user profile',
                 data:{}
