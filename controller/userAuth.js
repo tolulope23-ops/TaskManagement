@@ -57,7 +57,6 @@ const userLogin = async (req, res) => {
             message:'user loggedin',
             data: {
                 email: user.email,
-                password: user.password
             }
         });
     } catch (error) {
