@@ -72,6 +72,13 @@ const updateUserProfile = async(req, res) =>{
 
     try {
         const updateProfile = await UserProfile.findByIdAndUpdate({_id: id}, (req.body), {new: true});
+        if (!updateProfile){
+            res.status(StatusCodes.NOT_FOUND).json({
+                status: StatusCodes.NOT_FOUND,
+                message: 'user not found!',
+                data: {}
+            })
+        }
         res.status(StatusCodes.OK).json({
             status: StatusCodes.OK,
             message: 'user profile updated!',
