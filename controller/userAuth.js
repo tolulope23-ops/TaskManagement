@@ -67,5 +67,29 @@ const userLogin = async (req, res) => {
     }
 }
 
+const deleteUserAccount = async (req, res) => {
+    const { id } = req.params;
 
-module.exports = {userRegister, userLogin};
+    try {
+        const deleteUser = await User.findByIdAndDelete({_id: id}, {new: true});
+        if (!deleteUser){
+            res.status(StatusCodes.NOT_FOUND).json({
+                status: StatusCodes.NOT_FOUND,
+                message: 'user not found!',
+                data: {}
+            })
+        }
+
+        res.status(StatusCodes.OK).json({
+            status: StatusCodes.OK,
+            message: 'user deleted!'
+        })
+    } catch (error) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+            status: StatusCodes.BAD_REQUEST,
+            message: `error deleting user: ${error}`
+        });
+    }
+}
+
+module.exports = {userRegister, userLogin, deleteUserAccount};
