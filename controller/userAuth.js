@@ -52,13 +52,18 @@ const userLogin = async (req, res) => {
                 message:'password not correct'
             });
 
-        res.status(StatusCodes.OK).json({
-            status:StatusCodes.OK,
-            message:'user loggedin',
-            data: {
-                email: user.email,
-            }
-        });
+            const accessToken = await user.createJWT();
+            return res.status(StatusCodes.OK).json({
+                statusCode: StatusCodes.OK,
+                message: "login successful",
+                data: {
+                    user: {
+                    id: user._id,
+                    email: user.email,
+                  },
+                  accessToken,
+                },
+            });
     } catch (error) {
         res.status(StatusCodes.BAD_REQUEST).json({
             status: StatusCodes.BAD_REQUEST,
