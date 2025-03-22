@@ -4,15 +4,16 @@ const joi = require('joi');
 const userRegisterData = () => {
     return joi.object({
     firstname:
-    joi.string().min(3).max(10).required().messages({'any.required':'firstname cannot be empty'}),
+    joi.string().min(3).max(10).required().messages({'string.empty':'firstname cannot be empty'}),
     
     lastname:
-    joi.string().min(3).max(10).required().messages({'any.required':'lastname cannot be empty'}),
+    joi.string().min(3).max(10).required().messages({'string.empty':'lastname cannot be empty'}),
     
     email:
     joi.string().email().required().messages({
         'string.email': 'Invalid email format',
-        'any.required': 'Email is required'
+        'any.required': 'email is required',
+        'string.empty': 'email cannot be empty'
     }),
 
     password:
