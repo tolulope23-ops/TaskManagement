@@ -1,95 +1,86 @@
 const {StatusCodes} = require('http-status-codes');
 const UserProfile = require('../model/userProfile');
 
-const UserInfo = async (req, res) => {
+const UserInfo = async (req, res, next) => {
     try {
         const profile = await UserProfile.find();
-        if(profile.length == 0){
+        if(profile.length === 0){
             return res.status(StatusCodes.NOT_FOUND).json({
                 status: StatusCodes.NOT_FOUND,
-                message: 'no user profile',
+                message: 'No user profiles found',
                 data:{}
             });
         }
         res.status(StatusCodes.OK).json({
             status: StatusCodes.OK,
-            message: 'user(s) profile',
+            message: 'User profiles retrieved successfully',
             data: profile
         });
 
     } catch (error) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-            status: StatusCodes.BAD_REQUEST,
-            message: `no user(s) profile: ${error}`
-        });
+        next(error);
     }
-    
-}
 
+};
 
-const UserInfoById = async (req, res) =>{
+const UserInfoById = async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        const profile = await UserProfile.findById({_id: id}).populate('user_Id');
+        const profile = await UserProfile.findById(id).populate('user_Id');
         if(!profile){
             return res.status(StatusCodes.NOT_FOUND).json({
                 status: StatusCodes.NOT_FOUND,
-                message: 'user not found',
+                message: 'User not found',
             });
         };
         res.status(StatusCodes.OK).json({
             status: StatusCodes.OK,
-            message: 'user profile',
+            message: 'User profile retrieved successfully',
             data: profile
         });
-    } catch (error) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-            status: StatusCodes.BAD_REQUEST,
-            message: `user not found: ${error}`
-        });
-    }
-}
 
-const addUserProfile = async(req, res) => {
+    } catch (error) {
+       next(error);
+    }
+};
+
+const addUserProfile = async(req, res, next) => {
     try {
         const addProfile = new UserProfile(req.body);
         await addProfile.save();
         res.status(StatusCodes.CREATED).json({
             status: StatusCodes.CREATED,
-            message: 'user profile created',
+            message: 'User profile created successfully',
         });
-    } catch (error) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-            status: StatusCodes.BAD_REQUEST,
-            message: `error creating profile: ${error}`
-        });
-    }
-}
 
-const updateUserProfile = async(req, res) =>{
+    } catch (error) {
+        next(error);
+    }
+};
+
+const updateUserProfile = async(req, res, next) => {
     const { id } = req.params;
 
     try {
-        const updateProfile = await UserProfile.findByIdAndUpdate({_id: id}, (req.body), {new: true});
+        const updateProfile = await UserProfile.findByIdAndUpdate(id, req.body, {new: true});
         if (!updateProfile){
-            res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.NOT_FOUND).json({
                 status: StatusCodes.NOT_FOUND,
-                message: 'user not found!',
+                message: 'User not found',
                 data: {}
-            })
+            });
         }
-        res.status(StatusCodes.OK).json({
+
+        return res.status(StatusCodes.OK).json({
             status: StatusCodes.OK,
-            message: 'user profile updated!',
+            message: 'User profile updated successfully',
             data: updateProfile
-        })
-    } catch (error) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-            status: StatusCodes.BAD_REQUEST,
-            message: `error updating profile: ${error}`
         });
+
+    } catch (error) {
+        next(error);
     }
-}
+};
 
 module.exports = {addUserProfile, UserInfo, UserInfoById, updateUserProfile};
