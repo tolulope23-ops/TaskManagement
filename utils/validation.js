@@ -1,6 +1,6 @@
 const joi = require('joi');
 
-// Define the validation scheme for user Signup using joi
+// Define the validation schema for user Signup using joi
 const userRegisterData = () => {
     return joi.object({
     firstname:
