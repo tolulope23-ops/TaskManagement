@@ -26,6 +26,9 @@ const userRegister = async (req, res, next) => {
             }
         });
 
+        req.user = newUser;
+        next();
+        
     } catch (error) {
         next(error);
     }
