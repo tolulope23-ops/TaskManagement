@@ -12,7 +12,7 @@ const validateUserData = (req, res, next) => {
         return res.status(StatusCodes.BAD_REQUEST).json({
         errors: error.details.map((e) => e.message)
     });
-        }
+    };
     next();
 };
 
