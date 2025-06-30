@@ -1,9 +1,8 @@
-import bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 
 const generateOTP = async () => {
-   const OTP = Math.floor(100000 + Math.random() * 900000).toString();
-   const hashedOTP = await bcrypt.hash(OTP, 10);
-   return hashedOTP;
+   const otp = Math.floor(100000 + Math.random() * 900000).toString();
+   return otp;
 }
 
 module.exports = generateOTP;
