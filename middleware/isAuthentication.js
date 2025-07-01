@@ -19,7 +19,7 @@ const isUserAuthenticated = (req, res, next) => {
 
     try {
         const payload = jwt.verify(accessToken, JWT_SECRET);
-        req.user = {
+        req.userData = {
             id: payload.id,
             email: payload.email,
         }
