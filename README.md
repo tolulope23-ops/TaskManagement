@@ -37,7 +37,7 @@ A simple and efficient **Task Management Application** designed to help users or
 ---
 
 ## 📁 Project Structure (Example)
-
+```
 task-manager/
 ├── controllers/
 ├── models/
@@ -48,7 +48,7 @@ task-manager/
 ├── .env
 ├── app.js
 └── README.md
-
+```
 
 ## Installation
 
