@@ -40,11 +40,11 @@ A simple and efficient **Task Management Application** designed to help users or
 ```
 task-manager/
 ├── controllers/
-├── models/
-├── routes/
-├── middlewares/
-├── utils/
 ├── db/
+├── middlewares/
+├── model/
+├── routes/
+├── utils/
 ├── .env
 ├── app.js
 └── README.md
