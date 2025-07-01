@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { boolean } = require('joi');
 
 
 const userSchema = new mongoose.Schema({
@@ -23,7 +24,17 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true,
-    }
+    },
+
+    verified: {
+        type: Boolean,
+        default: false
+    },
+
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
 })
 
 userSchema.pre('save', async function () {
