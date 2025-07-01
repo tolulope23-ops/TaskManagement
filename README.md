@@ -7,8 +7,11 @@ A simple and efficient **Task Management Application** designed to help users or
 ## 🚀 Features
 
 - **User Authentication**
-  - Register, Login
-  - 
+  - User Registration with hashed password
+  - User Login with secure JWT-based authentication
+  - Protected routes to restrict access to logged-in users only
+  - Token expiration and secure middleware for verification
+  - Proper error handling and input validation
 
 - 🗂️ **Task CRUD**
   - Create new tasks with title, description, and due date

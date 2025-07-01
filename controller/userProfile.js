@@ -83,4 +83,27 @@ const updateUserProfile = async(req, res, next) => {
     }
 };
 
-module.exports = {addUserProfile, UserInfo, UserInfoById, updateUserProfile};
+const deleteUserAccount = async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+        const deleteUser = await User.findByIdAndDelete(id);
+        if (!deleteUser) {
+            return res.status(StatusCodes.NOT_FOUND).json({
+                status: StatusCodes.NOT_FOUND,
+                message: 'User not found!',
+                data: {}
+            });
+        }
+
+        res.status(StatusCodes.OK).json({
+            status: StatusCodes.OK,
+            message: 'user deleted!'
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = {addUserProfile, UserInfo, UserInfoById, updateUserProfile, deleteUserAccount};
