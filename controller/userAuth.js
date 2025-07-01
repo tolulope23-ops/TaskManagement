@@ -1,32 +1,30 @@
 const {StatusCodes} = require('http-status-codes');
 const User = require('../model/userAuth');
 
-
-const userRegister = async (req, res, next) => {
-    const {firstname, lastname, email, password} = req.body;
-
+const userRegister = async (req, res, next) => {    
+    const {firstname, email} = req.body;
+    
     try {
         const userExist = await User.findOne({ email });
         if(userExist){
             return res.status(StatusCodes.BAD_REQUEST).json({
-                status: StatusCodes.BAD_REQUEST,
+                status: false,
                 message: 'User already exist'
             });
-        }
+        };
 
         const newUser = new User(req.body);
         await newUser.save();
         res.status(StatusCodes.CREATED).json({
-            status: StatusCodes.CREATED,
+            status: "success",
             message: 'New user registered',
             data: {
-                firstname: newUser.firstname,
-                lastname: newUser.lastname,
-                email: newUser.email
+                firstname: firstname,
+                email: email
             }
         });
 
-        req.user = newUser;
+        req.userData = newUser;
         next();
 
     } catch (error) {
@@ -55,6 +53,8 @@ const userLogin = async (req, res, next) => {
         }
 
             const accessToken = await user.createJWT();
+            const updateUser = await User.findByIdAndUpdate({_id: user._id, accessToken, new: true });
+            
             return res.status(StatusCodes.OK).json({
                 statusCode: StatusCodes.OK,
                 message: "Login successful",
@@ -66,33 +66,12 @@ const userLogin = async (req, res, next) => {
                   accessToken,
                 },
             });
-
-    } catch (error) {
+    } 
+    catch (error) {
         next(error);
     }
 };
 
-const deleteUserAccount = async (req, res, next) => {
-    const { id } = req.params;
 
-    try {
-        const deleteUser = await User.findByIdAndDelete(id);
-        if (!deleteUser) {
-            return res.status(StatusCodes.NOT_FOUND).json({
-                status: StatusCodes.NOT_FOUND,
-                message: 'User not found!',
-                data: {}
-            });
-        }
 
-        res.status(StatusCodes.OK).json({
-            status: StatusCodes.OK,
-            message: 'user deleted!'
-        });
-
-    } catch (error) {
-        next(error);
-    }
-};
-
-module.exports = {userRegister, userLogin, deleteUserAccount};
+module.exports = {userRegister, userLogin};
