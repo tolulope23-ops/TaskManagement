@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { boolean } = require('joi');
 
 
 const userSchema = new mongoose.Schema({
@@ -26,7 +25,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
 
-    verified: {
+    isVerified: {
         type: Boolean,
         default: false
     },
