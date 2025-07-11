@@ -44,9 +44,9 @@ const verifyEmailHtml = (username, otp) => `
         <p>Hi ${username},</p>
         <p>Use the verification code below to complete your registration:</p>
         <div class="otp-box">${otp}</div>
-        <p style="margin-top: 30px;">If you did not request this, please ignore this email.</p>
+        <p style="margin-top: 20px;">If you did not request this, please ignore this email.</p>
         <div class="footer">
-          &copy; 2025 Your Company. All rights reserved.
+          &copy; 2025 RaeDev. All rights reserved.
         </div>
       </div>
     </body>

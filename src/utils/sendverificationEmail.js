@@ -1,9 +1,9 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 const {verifyEmailHtml} = require('./emailTemplate');
-const generateOTP = require('../utils/sendOTP');
-const { StatusCodes } = require('http-status-codes');
+const {generateOTP} = require('./sendOTP');
 
+const OTP_DB = {}
 //Email configuration
 const transporter = nodemailer.createTransport({
     service: process.env.GMAIL_SERVICE,
@@ -17,14 +17,19 @@ const transporter = nodemailer.createTransport({
 });
 
 // Sends otp for email verification
-const sendVerification = async (req, res, next) => {
-try{
-  const OTP = await generateOTP();
-  console.log(OTP);
-
+const sendVerification = async (req, res) => {
   const user = req.userData;
+  const userId = user._id;
   const userEmail = user.email;
   const username = user.firstname;
+
+try{
+// Stores otp per user id
+  const OTP = await generateOTP();
+  OTP_DB[userId] = {
+      OTP,
+      expiresAt: Date.now() + 10 * 60 * 1000
+  };
 
   const mail = await transporter.sendMail({
     from: process.env.GMAIL_USER,
@@ -43,4 +48,4 @@ try{
     }
 };
 
-module.exports = { sendVerification};
+module.exports = { sendVerification, OTP_DB};

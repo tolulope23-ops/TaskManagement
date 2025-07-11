@@ -76,7 +76,11 @@ const updateTask = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
+
+const getFilteredTask = async (req, res, next) => {
+
+};
 
 
 const deleteTask = async (req, res, next) => {
@@ -96,7 +100,7 @@ const deleteTask = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
 
 module.exports = {createTask, deleteTask, getTask, getAllTask, updateTask};

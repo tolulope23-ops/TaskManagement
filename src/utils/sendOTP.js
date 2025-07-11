@@ -3,4 +3,4 @@ const generateOTP = async () => {
    return otp;
 }
 
-module.exports = generateOTP;
+module.exports = {generateOTP};
