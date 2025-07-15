@@ -1,5 +1,5 @@
 const {StatusCodes} = require('http-status-codes');
-const {userRegisterData, userLoginData} = require('../utils/validation');
+const {userRegisterData, userLoginData} = require('../utils/validation.utils');
 
 const validateUserData = (req, res, next) => {
     //Check if the user is registering or logging in to determin the schema validation type
