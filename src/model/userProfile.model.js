@@ -16,11 +16,6 @@ const userProfileSchema = new mongoose.Schema({
         required: true
     },
 
-    DOB: {
-        type: Date,
-        required: true
-    },
-
     gender: {
         type: String,
         required: true
