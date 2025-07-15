@@ -1,5 +1,5 @@
 const {StatusCodes} = require('http-status-codes');
-const UserProfile = require('../model/userProfile');
+const UserProfile = require('../model/userProfile.model');
 
 const UserInfo = async (req, res, next) => {
     try {
