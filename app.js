@@ -2,11 +2,11 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-const userRoute = require('./src/routes/userAuth');
-const userProfileRoute = require('./src/routes/userProfile');
-const taskRoute = require('./src/routes/tasks');
+const userRoute = require('./src/routes/userAuth.routes');
+const userProfileRoute = require('./src/routes/userProfile.routes');
+const taskRoute = require('./src/routes/tasks.routes');
 
-const { errorHandlerMiddlware } = require('./src/middleware/errorHandler');
+const { errorHandlerMiddlware } = require('./src/middleware/errorHandler.middleware');
 
 app.use(cors());
 app.use(express.json());

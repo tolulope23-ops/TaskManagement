@@ -21,7 +21,7 @@ const verifyEmailHtml = (username, otp) => `
         }
         .otp-box {
           font-size: 24px;
-          font-weight: bold;
+          font-weight:bold;
           margin-top: 20px;
           background-color: #e9ecef;
           padding: 10px;
@@ -45,6 +45,7 @@ const verifyEmailHtml = (username, otp) => `
         <p>Use the verification code below to complete your registration:</p>
         <div class="otp-box">${otp}</div>
         <p style="margin-top: 20px;">If you did not request this, please ignore this email.</p>
+        <p style="margin-top: 20px;">This code expires in 1 hour.</p>
         <div class="footer">
           &copy; 2025 RaeDev. All rights reserved.
         </div>
